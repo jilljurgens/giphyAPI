@@ -48,20 +48,37 @@ $(document).ready(function() {
 				var rating = results[i].rating;
 				var p = $("<p>").text("Rated: " + rating);
 				var gifImage = $("<img>");
-				gifImage.attr("src", results[i].images.fixed_height.url);
+				gifImage.attr("src", results[i].images.fixed_height_still.url);
 				gifDiv.append(p);
 				gifDiv.append(gifImage);
 				$("#gifs-show-here").prepend(gifDiv);
-				console.log(results);
-			} 
-		}
-	});
+				//console.log(results);
+				var stillImage = results[i].images.fixed_height_still.url;
+				var movingImage = results[i].images.fixed_height.url;
+				gifImage.attr("still", stillImage);
+				gifImage.attr("moving", movingImage);
+				gifImage.addClass("gifClass");
+				} 
+			};
+		});	
+	});	
+		function animate(){
+			if ($(this).attr("src")==$(this).attr("still")){
+				$(this).attr("src", $(this).attr("moving"));
+				console.log("setting source to moving")
+			}
+			else if ($(this).attr("src")==$(this).attr("moving")){
+				$(this).attr("src", $(this).attr("still"));
+				console.log("setting source to still")
 
-});
-
+			}	
+			console.log(this);
+		};
+	
+			$(document).on("click", ".gifClass", animate);
 //create an on.click function to call Giphy API with search criteria (button name) to return 10 gifs 
 
-
+});
 //create another on click function for the 10 gifs that appear. to play and stop (if var play == true maybe?)
 
 //if make it to search, create an on.click function to(clear previous buttons if doing search) push to array and create a new button.
@@ -70,11 +87,12 @@ $(document).ready(function() {
 
 
 
-//When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page. 
+
 //When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
 //Under every gif, display its rating (PG, G, so on). 
 //This data is provided by the GIPHY API.
 //Only once you get images displaying with button presses should you move on to the next step.
 
 
-});
+
+	
